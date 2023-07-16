@@ -15,4 +15,14 @@ abstract class BaseFragment: Fragment() {
 
     //scoped to the activity, will not be destroyed when fragment is destroyed
     protected val sharedViewModel: ToBuyViewModel by activityViewModels()
+
+    // region Navigation helper methods
+    protected fun navigateUp() {
+        mainActivity.navController.navigateUp()
+    }
+
+    protected fun navigateViaNavGraph(actionId: Int) {
+        mainActivity.navController.navigate(actionId)
+    }
+    // endregion Navigation helper methods
 }

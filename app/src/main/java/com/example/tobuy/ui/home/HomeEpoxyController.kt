@@ -1,11 +1,13 @@
 package com.example.tobuy.ui.home
 
+import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.airbnb.epoxy.EpoxyController
 import com.example.tobuy.R
 import com.example.tobuy.database.entity.ItemEntity
 import com.example.tobuy.databinding.ModelItemEntityBinding
+import com.example.tobuy.ui.epoxy.LoadingEpoxyModel
 import com.example.tobuy.ui.epoxy.ViewBindingKotlinModel
 
 class HomeEpoxyController(private val itemEntityInterface: ItemEntityInterface): EpoxyController() {
@@ -27,7 +29,7 @@ class HomeEpoxyController(private val itemEntityInterface: ItemEntityInterface):
 
     override fun buildModels() {
         if(isLoading){
-            //todo loading state
+            LoadingEpoxyModel().id("loading_state").addTo(this)
             return
         }
 
@@ -61,6 +63,15 @@ class HomeEpoxyController(private val itemEntityInterface: ItemEntityInterface):
             priorityTextView.setOnClickListener {
                 itmEntityInterface.onBumpPriority(itemEntity)
             }
+
+            val colorRes = when(itemEntity.priority){
+                1 -> android.R.color.holo_green_dark
+                2 -> android.R.color.holo_orange_dark
+                3 -> android.R.color.holo_red_dark
+                else -> R.color.purple_700
+            }
+
+            priorityTextView.setBackgroundColor(ContextCompat.getColor(root.context, colorRes))
         }
 
 
