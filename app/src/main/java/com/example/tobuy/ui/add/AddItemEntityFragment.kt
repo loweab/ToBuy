@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.tobuy.R
 import com.example.tobuy.database.entity.ItemEntity
 import com.example.tobuy.databinding.FragmentAddItemEntityBinding
@@ -30,10 +31,31 @@ class AddItemEntityFragment : BaseFragment() {
         binding.saveButton.setOnClickListener {
             saveItemEntityToDatabase()
         }
+
+        sharedViewModel.transactionCompleteLiveData.observe(viewLifecycleOwner){complete ->
+            if(complete){
+                Toast.makeText(requireActivity(), "Item Saved!", Toast.LENGTH_SHORT).show()
+                binding.titleEditText.text = null
+                binding.titleEditText.requestFocus()
+                mainActivity.showKeyboard(binding.titleEditText)
+
+                binding.descriptionEditTet.text = null
+                binding.radioGroup.check(R.id.radioButtonLow)
+            }
+        }
+
+        //default focus on title ET and keyboard open
+        binding.titleEditText.requestFocus()
+        mainActivity.showKeyboard(binding.titleEditText)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        sharedViewModel.transactionCompleteLiveData.postValue(false)
     }
 
     private fun saveItemEntityToDatabase() {
-        val itemTitle = binding.titleEditTet.text.toString().trim()
+        val itemTitle = binding.titleEditText.text.toString().trim()
         if(itemTitle.isEmpty()){
             binding.titleTextField.error = "Required Field"
             return

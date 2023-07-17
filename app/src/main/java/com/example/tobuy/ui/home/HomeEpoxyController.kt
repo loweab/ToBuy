@@ -6,6 +6,7 @@ import androidx.core.view.isVisible
 import com.airbnb.epoxy.EpoxyController
 import com.example.tobuy.R
 import com.example.tobuy.database.entity.ItemEntity
+import com.example.tobuy.database.entity.ItemEntityInterface
 import com.example.tobuy.databinding.ModelItemEntityBinding
 import com.example.tobuy.ui.epoxy.LoadingEpoxyModel
 import com.example.tobuy.ui.epoxy.ViewBindingKotlinModel
@@ -54,10 +55,6 @@ class HomeEpoxyController(private val itemEntityInterface: ItemEntityInterface):
             }else{
                 descriptionTextView.isVisible = true
                 descriptionTextView.text = itemEntity.description
-            }
-
-            deleteImageView.setOnClickListener {
-                itmEntityInterface.onDeleteItemEntity(itemEntity)
             }
 
             priorityTextView.setOnClickListener {

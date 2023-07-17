@@ -1,8 +1,8 @@
-package com.example.tobuy.ui.home
+package com.example.tobuy.database.entity
 
 import com.example.tobuy.database.entity.ItemEntity
 
 interface ItemEntityInterface {
-    fun onDeleteItemEntity(itemEntity: ItemEntity)
+
     fun onBumpPriority(itemEntity: ItemEntity)
 }
