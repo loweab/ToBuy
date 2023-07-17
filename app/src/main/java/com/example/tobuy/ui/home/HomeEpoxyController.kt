@@ -1,5 +1,6 @@
 package com.example.tobuy.ui.home
 
+import android.content.res.ColorStateList
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -7,6 +8,7 @@ import com.airbnb.epoxy.EpoxyController
 import com.example.tobuy.R
 import com.example.tobuy.database.entity.ItemEntity
 import com.example.tobuy.database.entity.ItemEntityInterface
+import com.example.tobuy.databinding.ModelEmptyStateBinding
 import com.example.tobuy.databinding.ModelItemEntityBinding
 import com.example.tobuy.ui.epoxy.LoadingEpoxyModel
 import com.example.tobuy.ui.epoxy.ViewBindingKotlinModel
@@ -35,7 +37,7 @@ class HomeEpoxyController(private val itemEntityInterface: ItemEntityInterface):
         }
 
         if(itemEntityList.isEmpty()){
-            //todo empty state
+            EmptyStateEpoxyModel().id("empty_state").addTo(this)
             return
         }
 
@@ -68,9 +70,16 @@ class HomeEpoxyController(private val itemEntityInterface: ItemEntityInterface):
                 else -> R.color.purple_700
             }
 
-            priorityTextView.setBackgroundColor(ContextCompat.getColor(root.context, colorRes))
+            val color = ContextCompat.getColor(root.context, colorRes)
+            priorityTextView.setBackgroundColor(color)
+            cardView.setStrokeColor(ColorStateList.valueOf(color))
         }
+    }
 
+    class EmptyStateEpoxyModel : ViewBindingKotlinModel<ModelEmptyStateBinding>(R.layout.model_empty_state){
+        override fun ModelEmptyStateBinding.bind() {
+
+        }
 
     }
 }

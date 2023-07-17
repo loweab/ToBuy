@@ -14,6 +14,10 @@ class ToBuyRepository(private val appDatabase: AppDatabase) {
         appDatabase.itemEntityDao().delete(itemEntity)
     }
 
+    suspend fun updateItem(itemEntity: ItemEntity){
+        appDatabase.itemEntityDao().update(itemEntity)
+    }
+
     fun getAllItems():Flow<List<ItemEntity>>{
         return appDatabase.itemEntityDao().getAllItemEntities()
     }
