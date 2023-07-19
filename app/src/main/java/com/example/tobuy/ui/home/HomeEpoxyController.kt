@@ -9,6 +9,7 @@ import com.example.tobuy.R
 import com.example.tobuy.database.entity.ItemEntity
 import com.example.tobuy.database.entity.ItemEntityInterface
 import com.example.tobuy.databinding.ModelEmptyStateBinding
+import com.example.tobuy.databinding.ModelHeaderItemBinding
 import com.example.tobuy.databinding.ModelItemEntityBinding
 import com.example.tobuy.ui.epoxy.LoadingEpoxyModel
 import com.example.tobuy.ui.epoxy.ViewBindingKotlinModel
@@ -41,8 +42,24 @@ class HomeEpoxyController(private val itemEntityInterface: ItemEntityInterface):
             return
         }
 
-        itemEntityList.forEach { item ->
+        var currentPriority: Int = -1
+        itemEntityList.sortedByDescending {
+            it.priority
+        }.forEach { item ->
+            if(item.priority != currentPriority){
+                currentPriority = item.priority
+                val text = getHeaderTextFromPriority(currentPriority)
+                HeaderEpoxyModel(text).id(text).addTo(this)
+            }
             ItemEntityEpoxyModel(item, itemEntityInterface).id(item.id).addTo(this)
+        }
+    }
+
+    private fun getHeaderTextFromPriority(priority: Int): String {
+        return when(priority){
+            1 -> "Low"
+            2 -> "Medium"
+            else -> "High"
         }
     }
 
@@ -67,7 +84,7 @@ class HomeEpoxyController(private val itemEntityInterface: ItemEntityInterface):
                 1 -> android.R.color.holo_green_dark
                 2 -> android.R.color.holo_orange_dark
                 3 -> android.R.color.holo_red_dark
-                else -> R.color.purple_700
+                else -> R.color.blue_gray_700
             }
 
             val color = ContextCompat.getColor(root.context, colorRes)
@@ -78,7 +95,14 @@ class HomeEpoxyController(private val itemEntityInterface: ItemEntityInterface):
 
     class EmptyStateEpoxyModel : ViewBindingKotlinModel<ModelEmptyStateBinding>(R.layout.model_empty_state){
         override fun ModelEmptyStateBinding.bind() {
+            //nothing right now
+        }
+    }
 
+    data class HeaderEpoxyModel(val headerText: String):
+        ViewBindingKotlinModel<ModelHeaderItemBinding>(R.layout.model_header_item){
+        override fun ModelHeaderItemBinding.bind() {
+            textView.text = headerText
         }
 
     }

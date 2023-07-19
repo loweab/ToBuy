@@ -5,6 +5,7 @@
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/background"
     android:clipChildren="false">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,7 +21,9 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
             android:hint="Title"
+            android:textColorHint="?attr/colorOnBackground"
             app:errorEnabled="true"
+            app:hintTextColor="?attr/colorOnBackground"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -39,11 +42,14 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="8dp"
             android:hint="Description (Optional)"
+            android:textColorHint="?attr/colorOnBackground"
+            app:hintTextColor="?attr/colorOnBackground"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/titleTextField">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/descriptionEditTet"
+                android:textColor="?attr/colorOnBackground"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -66,6 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="?attr/colorOnBackground"
                 android:text="Low" />
 
             <com.google.android.material.radiobutton.MaterialRadioButton
@@ -73,6 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="?attr/colorOnBackground"
                 android:text="Medium" />
 
             <com.google.android.material.radiobutton.MaterialRadioButton
@@ -80,6 +88,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="?attr/colorOnBackground"
                 android:text="High" />
 
         </RadioGroup>
