@@ -17,6 +17,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:itemSpacing="8dp"
+        android:paddingBottom="54dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

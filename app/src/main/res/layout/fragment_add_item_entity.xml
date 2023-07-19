@@ -21,6 +21,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
             android:hint="Title"
+            android:theme="@style/ToBuyOutlinedBoxDense"
             android:textColorHint="?attr/colorOnBackground"
             app:errorEnabled="true"
             app:hintTextColor="?attr/colorOnBackground"
@@ -29,6 +30,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/title_edit_text"
+                android:inputType="textCapSentences"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -42,6 +44,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="8dp"
             android:hint="Description (Optional)"
+            android:theme="@style/ToBuyOutlinedBoxDense"
             android:textColorHint="?attr/colorOnBackground"
             app:hintTextColor="?attr/colorOnBackground"
             app:layout_constraintStart_toStartOf="parent"
@@ -50,6 +53,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/descriptionEditTet"
                 android:textColor="?attr/colorOnBackground"
+                android:inputType="textCapSentences"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
