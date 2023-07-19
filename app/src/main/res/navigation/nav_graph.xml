@@ -26,4 +26,9 @@
             app:nullable="true"
             app:argType="string"/>
     </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.tobuy.ui.profile.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>
