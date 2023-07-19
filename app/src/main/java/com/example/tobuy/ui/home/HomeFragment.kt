@@ -75,5 +75,10 @@ class HomeFragment : BaseFragment(), ItemEntityInterface {
         sharedViewModel.updateItem(updatedItemEntity)
     }
 
+    override fun onItemSelected(itemEntity: ItemEntity) {
+        val navDirections = HomeFragmentDirections.actionHomeFragmentToAddItemEntityFragment(itemEntity.id)
+        navigateViaNavGraph(navDirections)
+    }
+
 
 }

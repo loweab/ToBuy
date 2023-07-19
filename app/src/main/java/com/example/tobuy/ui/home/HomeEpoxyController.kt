@@ -90,6 +90,10 @@ class HomeEpoxyController(private val itemEntityInterface: ItemEntityInterface):
             val color = ContextCompat.getColor(root.context, colorRes)
             priorityTextView.setBackgroundColor(color)
             cardView.setStrokeColor(ColorStateList.valueOf(color))
+
+            root.setOnClickListener {
+                itmEntityInterface.onItemSelected(itemEntity)
+            }
         }
     }
 
