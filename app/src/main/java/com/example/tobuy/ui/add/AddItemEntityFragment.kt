@@ -5,12 +5,14 @@ import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import android.widget.Toast
 import androidx.navigation.fragment.navArgs
 import com.example.tobuy.R
 import com.example.tobuy.database.entity.ItemEntity
 import com.example.tobuy.databinding.FragmentAddItemEntityBinding
 import com.example.tobuy.ui.BaseFragment
+import java.lang.Exception
 import java.util.UUID
 
 class AddItemEntityFragment : BaseFragment() {
@@ -42,6 +44,35 @@ class AddItemEntityFragment : BaseFragment() {
         binding.saveButton.setOnClickListener {
             saveItemEntityToDatabase()
         }
+
+        binding.quantitySeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                val currentText = binding.titleEditText.text.toString().trim()
+                if (currentText.isEmpty()){
+                    return
+                }
+
+                val endIndex = currentText.indexOf("[") - 1
+                val newText = if (endIndex > 0){
+                    "${currentText.substring(0, endIndex)} [$progress]"
+                }else{
+                    "$currentText [$progress]"
+                }
+
+                val sanitizedText = newText.replace("[1]", "")
+                binding.titleEditText.setText(sanitizedText)
+                binding.titleEditText.setSelection(sanitizedText.length)
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+
+            }
+
+        })
 
         sharedViewModel.transactionCompleteLiveData.observe(viewLifecycleOwner){complete ->
             if(complete){
@@ -79,7 +110,21 @@ class AddItemEntityFragment : BaseFragment() {
             }
 
             binding.saveButton.text = "Update"
-            mainActivity.supportActionBar?.title = "Udate Item"
+            mainActivity.supportActionBar?.title = "Update Item"
+
+            if(itemEntity.title.contains("[")){
+                val startIndex = itemEntity.title.indexOf("[") + 1
+                val endIndex = itemEntity.title.indexOf("]")
+
+                try {
+                    val progress = itemEntity.title.substring(startIndex, endIndex).toInt()
+                    binding.quantitySeekBar.progress = progress
+                }catch (e: Exception){
+                    //whoops
+                }
+
+
+            }
         }
     }
 

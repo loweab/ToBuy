@@ -8,10 +8,13 @@ import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.core.content.getSystemService
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 
@@ -42,8 +45,17 @@ class MainActivity : AppCompatActivity() {
         ))
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        NavigationUI.setupWithNavController(findViewById<BottomNavigationView>(R.id.bottomNavigation),
-            navHostFragment.navController)
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
+        setupWithNavController(bottomNavigationView, navController)
+
+        //destination changed listener to show/hide the bottom nav bar
+        navController.addOnDestinationChangedListener{controller, destination, arguments ->
+            if (appBarConfiguration.topLevelDestinations.contains(destination.id)){
+                bottomNavigationView.isVisible = true
+            }else{
+                bottomNavigationView.isGone = true
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
