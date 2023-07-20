@@ -15,7 +15,7 @@ class ToBuyViewModel(): ViewModel() {
     val itemEntityLiveData = MutableLiveData<List<ItemEntity>>()
     val categoryEntityLiveData = MutableLiveData<List<CategoryEntity>>()
 
-    val transactionCompleteLiveData = MutableLiveData<Boolean>()
+    val transactionCompleteLiveData = MutableLiveData<Event<Boolean>>()
 
     //this needs to be called before doing anything with the viewmodel
     fun init(appDatabase: AppDatabase){
@@ -38,7 +38,7 @@ class ToBuyViewModel(): ViewModel() {
         viewModelScope.launch {
             repository.insertItem(itemEntity)
 
-            transactionCompleteLiveData.postValue(true)
+            transactionCompleteLiveData.postValue(Event(true))
         }
 
     }
@@ -52,7 +52,7 @@ class ToBuyViewModel(): ViewModel() {
     fun updateItem(itemEntity: ItemEntity){
         viewModelScope.launch {
             repository.updateItem(itemEntity)
-            transactionCompleteLiveData.postValue(true)
+            transactionCompleteLiveData.postValue(Event(true))
         }
     }
     //endregion ItemEntity
@@ -62,7 +62,7 @@ class ToBuyViewModel(): ViewModel() {
         viewModelScope.launch {
             repository.insertCategory(categoryEntity)
 
-            transactionCompleteLiveData.postValue(true)
+            transactionCompleteLiveData.postValue(Event(true))
         }
 
     }
@@ -76,7 +76,7 @@ class ToBuyViewModel(): ViewModel() {
     fun updateCategory(categoryEntity: CategoryEntity){
         viewModelScope.launch {
             repository.updateCategory(categoryEntity)
-            transactionCompleteLiveData.postValue(true)
+            transactionCompleteLiveData.postValue(Event(true))
         }
     }
     //endregion CategoryEntity

@@ -74,22 +74,23 @@ class AddItemEntityFragment : BaseFragment() {
 
         })
 
-        sharedViewModel.transactionCompleteLiveData.observe(viewLifecycleOwner){complete ->
-            if(complete){
-                Toast.makeText(requireActivity(), "Item Saved!", Toast.LENGTH_SHORT).show()
+        sharedViewModel.transactionCompleteLiveData.observe(viewLifecycleOwner){event ->
+          event.getContent()?.let {
+              Toast.makeText(requireActivity(), "Item Saved!", Toast.LENGTH_SHORT).show()
 
-                if(isInEditMode){
-                    navigateUp()
-                    return@observe
-                }
+              if(isInEditMode){
+                  navigateUp()
+                  return@observe
+              }
 
-                binding.titleEditText.text = null
-                binding.titleEditText.requestFocus()
-                mainActivity.showKeyboard(binding.titleEditText)
+              binding.titleEditText.text = null
+              binding.titleEditText.requestFocus()
+              mainActivity.showKeyboard(binding.titleEditText)
 
-                binding.descriptionEditTet.text = null
-                binding.radioGroup.check(R.id.radioButtonLow)
-            }
+              binding.descriptionEditTet.text = null
+              binding.radioGroup.check(R.id.radioButtonLow)
+          }
+
         }
 
         //default focus on title ET and keyboard open
@@ -128,10 +129,6 @@ class AddItemEntityFragment : BaseFragment() {
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-        sharedViewModel.transactionCompleteLiveData.postValue(false)
-    }
 
     private fun saveItemEntityToDatabase() {
         val itemTitle = binding.titleEditText.text.toString().trim()

@@ -33,17 +33,12 @@ class AddCategoryFragment: BaseFragment() {
             saveCategoryToDatabase()
         }
 
-        sharedViewModel.transactionCompleteLiveData.observe(viewLifecycleOwner) { completed ->
-            if (completed) {
+        sharedViewModel.transactionCompleteLiveData.observe(viewLifecycleOwner) { event ->
+            event.getContent()?.let {
                 Toast.makeText(requireActivity(), "Category Saved!", Toast.LENGTH_SHORT).show()
                 navigateUp()
             }
         }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        sharedViewModel.transactionCompleteLiveData.postValue(false)
     }
 
     private fun saveCategoryToDatabase() {
