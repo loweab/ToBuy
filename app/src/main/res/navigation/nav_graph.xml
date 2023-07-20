@@ -30,5 +30,19 @@
         android:id="@+id/profileFragment"
         android:name="com.example.tobuy.ui.profile.ProfileFragment"
         android:label="Profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_addCategoryFragment"
+            app:destination="@id/addCategoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addCategoryFragment"
+        android:name="com.example.tobuy.ui.profile.AddCategoryFragment"
+        android:label="Add Category" >
+        <argument
+            android:name="selectedCategoryEntityId"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true"/>
+    </fragment>
 </navigation>

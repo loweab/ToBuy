@@ -6,6 +6,7 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.airbnb.epoxy.EpoxyController
 import com.example.tobuy.R
+import com.example.tobuy.addHeaderModel
 import com.example.tobuy.database.entity.ItemEntity
 import com.example.tobuy.database.entity.ItemEntityInterface
 import com.example.tobuy.databinding.ModelEmptyStateBinding
@@ -13,6 +14,7 @@ import com.example.tobuy.databinding.ModelHeaderItemBinding
 import com.example.tobuy.databinding.ModelItemEntityBinding
 import com.example.tobuy.ui.epoxy.LoadingEpoxyModel
 import com.example.tobuy.ui.epoxy.ViewBindingKotlinModel
+import com.example.tobuy.ui.epoxy.models.HeaderEpoxyModel
 
 class HomeEpoxyController(private val itemEntityInterface: ItemEntityInterface): EpoxyController() {
 
@@ -48,8 +50,7 @@ class HomeEpoxyController(private val itemEntityInterface: ItemEntityInterface):
         }.forEach { item ->
             if(item.priority != currentPriority){
                 currentPriority = item.priority
-                val text = getHeaderTextFromPriority(currentPriority)
-                HeaderEpoxyModel(text).id(text).addTo(this)
+                addHeaderModel(getHeaderTextFromPriority(currentPriority))
             }
             ItemEntityEpoxyModel(item, itemEntityInterface).id(item.id).addTo(this)
         }
@@ -103,11 +104,5 @@ class HomeEpoxyController(private val itemEntityInterface: ItemEntityInterface):
         }
     }
 
-    data class HeaderEpoxyModel(val headerText: String):
-        ViewBindingKotlinModel<ModelHeaderItemBinding>(R.layout.model_header_item){
-        override fun ModelHeaderItemBinding.bind() {
-            textView.text = headerText
-        }
 
-    }
 }

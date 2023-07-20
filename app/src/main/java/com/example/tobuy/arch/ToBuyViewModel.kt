@@ -4,8 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tobuy.database.AppDatabase
+import com.example.tobuy.database.entity.CategoryEntity
 import com.example.tobuy.database.entity.ItemEntity
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class ToBuyViewModel(): ViewModel() {
@@ -13,6 +13,7 @@ class ToBuyViewModel(): ViewModel() {
     private lateinit var repository : ToBuyRepository
 
     val itemEntityLiveData = MutableLiveData<List<ItemEntity>>()
+    val categoryEntityLiveData = MutableLiveData<List<CategoryEntity>>()
 
     val transactionCompleteLiveData = MutableLiveData<Boolean>()
 
@@ -25,8 +26,14 @@ class ToBuyViewModel(): ViewModel() {
                 itemEntityLiveData.postValue(items)
             }
         }
-    }
 
+        viewModelScope.launch {
+            repository.getAllCategories().collect { categories ->
+                categoryEntityLiveData.postValue(categories)
+            }
+        }
+    }
+    //region ItemEntity
     fun insertItem(itemEntity: ItemEntity){
         viewModelScope.launch {
             repository.insertItem(itemEntity)
@@ -48,4 +55,29 @@ class ToBuyViewModel(): ViewModel() {
             transactionCompleteLiveData.postValue(true)
         }
     }
+    //endregion ItemEntity
+
+    //region CategoryEntity
+    fun insertCategory(categoryEntity: CategoryEntity){
+        viewModelScope.launch {
+            repository.insertCategory(categoryEntity)
+
+            transactionCompleteLiveData.postValue(true)
+        }
+
+    }
+
+    fun deleteCategory(categoryEntity: CategoryEntity){
+        viewModelScope.launch {
+            repository.deleteCategory(categoryEntity)
+        }
+    }
+
+    fun updateCategory(categoryEntity: CategoryEntity){
+        viewModelScope.launch {
+            repository.updateCategory(categoryEntity)
+            transactionCompleteLiveData.postValue(true)
+        }
+    }
+    //endregion CategoryEntity
 }
